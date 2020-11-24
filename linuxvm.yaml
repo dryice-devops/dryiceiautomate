@@ -1,0 +1,20 @@
+imports:
+- path: linuxvm.jinja
+
+resources:
+- name: linuxvm
+  type: linuxvm.jinja
+  properties:
+    zone: us-central1-f
+
+# Create the firewall rule
+- name: http-firewall-rule
+  type: compute.v1.firewall
+  properties:
+    sourceRanges: ["0.0.0.0/0"]
+    targetTags: [ web-server ]
+    allowed:
+    - IPProtocol: HTTP
+      ports: [8052]
+    - IPProtocol: TCP
+      ports: [22]
